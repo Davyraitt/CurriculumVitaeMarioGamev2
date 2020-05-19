@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset version="1.2" tiledversion="1.3.2" name="TileSheet2" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="5908" columns="199">
+ <image source="Tilesheet/TileSheet2.png" width="3392" height="460"/>
+</tileset>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset version="1.2" tiledversion="1.3.2" name="NES - Super Mario Bros 3 - HUD &amp; Font" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="224" columns="14">
+ <image source="NES - Super Mario Bros 3 - HUD &amp; Font.png" width="264" height="300"/>
+</tileset>
