@@ -3,6 +3,7 @@ package com.davyraitt.cvgame.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -58,6 +59,9 @@ public class PlayScreen implements Screen {
     //creating the player
     private Mario player;
 
+    //Sound
+    private Music music;
+
 
     public PlayScreen(CVGame game) {
         atlas = new TextureAtlas("Mario_And_Enemies.pack");
@@ -82,6 +86,10 @@ public class PlayScreen implements Screen {
         world.setContactListener(new WorldContactListener());
 
         new B2WorldCreator(world, map);
+
+        music = CVGame.manager.get("Audio/Music/mario_music.ogg", Music.class);
+        music.setLooping(true);
+        music.play();
     }
 
     public TextureAtlas getAtlas () {

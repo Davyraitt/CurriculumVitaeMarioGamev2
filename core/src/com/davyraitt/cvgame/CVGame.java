@@ -3,6 +3,9 @@ package com.davyraitt.cvgame;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,9 +23,18 @@ public class CVGame extends Game {
     public static final short COIN_BIT = 8;
     public static final short DESTROYED_BIT = 16;
 
+    //Assetmanager
+    public static AssetManager manager;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
+        manager = new AssetManager();
+        manager.load("Audio/Music/mario_music.ogg", Music.class);
+        manager.load("Audio/Sounds/coin.wav", Sound.class);
+        manager.load("Audio/Sounds/bump.wav", Sound.class);
+        manager.load("Audio/Sounds/breakblock.wav", Sound.class);
+        manager.finishLoading();
         setScreen(new PlayScreen(this));
     }
 
@@ -33,6 +45,8 @@ public class CVGame extends Game {
 
     @Override
     public void dispose() {
+        super.dispose();
+        manager.dispose();
         batch.dispose();
     }
 }

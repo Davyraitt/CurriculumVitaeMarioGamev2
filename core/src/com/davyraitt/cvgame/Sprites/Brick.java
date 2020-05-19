@@ -1,6 +1,7 @@
 package com.davyraitt.cvgame.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,5 +23,6 @@ public class Brick extends InteractiveTileObject {
         setCategoryFilter(CVGame.DESTROYED_BIT);
         getCell().setTile(null);
         Hud.addScore(3141);
+        CVGame.manager.get("Audio/Sounds/breakblock.wav", Sound.class).play();
     }
 }
