@@ -24,6 +24,8 @@ public class CVGame extends Game {
     public static final short DESTROYED_BIT = 16;
     public static final short OBJECT_BIT = 32;
     public static final short ENEMY_BIT = 64;
+    public static final short ENEMY_HEAD_BIT = 128;
+
 
     //Assetmanager
     public static AssetManager manager;

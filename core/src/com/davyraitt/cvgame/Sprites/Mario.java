@@ -86,9 +86,7 @@ public class Mario extends Sprite {
         if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()) {
             region.flip(true, false);
             runningRight = false;
-        }
-
-        else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
+        } else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX()) {
             region.flip(true, false);
             runningRight = true;
         }
@@ -121,7 +119,13 @@ public class Mario extends Sprite {
         shape.setRadius(6 / CVGame.PPM);
 
         fdef.filter.categoryBits = CVGame.MARIO_BIT;
-        fdef.filter.maskBits = CVGame.GROUND_BIT | CVGame.COIN_BIT | CVGame.BRICK_BIT | CVGame.ENEMY_BIT | CVGame.OBJECT_BIT;
+        fdef.filter.maskBits =
+                CVGame.GROUND_BIT
+                        | CVGame.COIN_BIT
+                        | CVGame.BRICK_BIT |
+                        CVGame.ENEMY_BIT
+                        | CVGame.OBJECT_BIT
+                        | CVGame.ENEMY_HEAD_BIT;
 
 
         fdef.shape = shape;
