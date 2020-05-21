@@ -11,13 +11,14 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.davyraitt.cvgame.CVGame;
 import com.davyraitt.cvgame.Scenes.Hud;
+import com.davyraitt.cvgame.Screens.PlayScreen;
 
 public class Coin extends InteractiveTileObject {
     private static TiledMapTileSet tileSet;
     private final int BLANK_COIN = 3290;
 
-    public Coin(World world, TiledMap map, Rectangle bounds) {
-        super(world, map, bounds);
+    public Coin(PlayScreen screen, Rectangle bounds) {
+        super(screen, bounds);
         tileSet = map.getTileSets().getTileSet("NES - Super Mario Bros - World 1-1");
         fixture.setUserData(this);
         setCategoryFilter(CVGame.COIN_BIT);

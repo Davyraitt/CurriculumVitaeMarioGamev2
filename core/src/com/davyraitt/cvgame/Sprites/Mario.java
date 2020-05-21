@@ -3,7 +3,6 @@ package com.davyraitt.cvgame.Sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -14,8 +13,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.davyraitt.cvgame.CVGame;
 import com.davyraitt.cvgame.Screens.PlayScreen;
-
-import javax.xml.soap.Text;
 
 public class Mario extends Sprite {
     public World world;
@@ -34,9 +31,9 @@ public class Mario extends Sprite {
     private boolean runningRight;
 
 
-    public Mario(World world, PlayScreen screen) {
+    public Mario(PlayScreen screen) {
         super(screen.getAtlas().findRegion("little_mario"));
-        this.world = world;
+        this.world = screen.getWorld();
         //animations...
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -124,7 +121,7 @@ public class Mario extends Sprite {
         shape.setRadius(6 / CVGame.PPM);
 
         fdef.filter.categoryBits = CVGame.MARIO_BIT;
-        fdef.filter.maskBits = CVGame.DEFAULT_BIT | CVGame.COIN_BIT | CVGame.BRICK_BIT;
+        fdef.filter.maskBits = CVGame.GROUND_BIT | CVGame.COIN_BIT | CVGame.BRICK_BIT | CVGame.ENEMY_BIT | CVGame.OBJECT_BIT;
 
 
         fdef.shape = shape;

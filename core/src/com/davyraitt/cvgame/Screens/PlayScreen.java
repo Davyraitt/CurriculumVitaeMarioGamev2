@@ -28,6 +28,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.davyraitt.cvgame.CVGame;
 import com.davyraitt.cvgame.Scenes.Hud;
+import com.davyraitt.cvgame.Sprites.Goomba;
 import com.davyraitt.cvgame.Sprites.Mario;
 import com.davyraitt.cvgame.Tools.B2WorldCreator;
 import com.davyraitt.cvgame.Tools.WorldContactListener;
@@ -58,6 +59,7 @@ public class PlayScreen implements Screen {
 
     //creating the player
     private Mario player;
+    private Goomba goomba;
 
     //Sound
     private Music music;
@@ -81,15 +83,17 @@ public class PlayScreen implements Screen {
 
 
         //create player
-        player = new Mario(world, this);
+        player = new Mario(this);
 
         world.setContactListener(new WorldContactListener());
 
-        new B2WorldCreator(world, map);
+        new B2WorldCreator(this);
 
         music = CVGame.manager.get("Audio/Music/mario_music.ogg", Music.class);
         music.setLooping(true);
         music.play();
+
+        goomba = new Goomba(this, .32f , .32f);
     }
 
     public TextureAtlas getAtlas () {
@@ -121,6 +125,7 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
+        //goomba.update(dt);
         hud.update(dt);
 
         gameCam.position.x = player.b2body.getPosition().x;
@@ -150,6 +155,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
+        //goomba.draw(game.batch);
         game.batch.end();
 
 
@@ -185,5 +191,13 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+    }
+
+    public TiledMap getMap() {
+        return map;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }
