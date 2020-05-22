@@ -2,6 +2,7 @@ package com.davyraitt.cvgame.Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -12,8 +13,8 @@ import com.davyraitt.cvgame.Screens.PlayScreen;
 public class Brick extends InteractiveTileObject {
 
 
-    public Brick(PlayScreen screen, Rectangle bounds) {
-        super(screen, bounds);
+    public Brick(PlayScreen screen, MapObject object) {
+        super(screen, object);
         fixture.setUserData(this);
         setCategoryFilter(CVGame.BRICK_BIT);
     }

@@ -22,16 +22,23 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.davyraitt.cvgame.CVGame;
+import com.davyraitt.cvgame.Items.Item;
+import com.davyraitt.cvgame.Items.ItemDef;
+import com.davyraitt.cvgame.Items.Mushroom;
 import com.davyraitt.cvgame.Scenes.Hud;
 import com.davyraitt.cvgame.Sprites.Goomba;
 import com.davyraitt.cvgame.Sprites.Mario;
 import com.davyraitt.cvgame.Tools.B2WorldCreator;
 import com.davyraitt.cvgame.Tools.WorldContactListener;
+
+import java.util.PriorityQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.xml.soap.Text;
 
@@ -60,9 +67,14 @@ public class PlayScreen implements Screen {
     //creating the player
     private Mario player;
     private Goomba goomba;
+    private Goomba goomba2;
 
     //Sound
     private Music music;
+
+    //Items
+    private Array<Item> items;
+    private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
 
     public PlayScreen(CVGame game) {
@@ -93,11 +105,28 @@ public class PlayScreen implements Screen {
         music.setLooping(true);
         music.play();
 
-        goomba = new Goomba(this, .64f , .64f);
+        goomba = new Goomba(this, 5.64f, .16f);
+        goomba2 = new Goomba(this, 3.64f, .16f);
+
+        items = new Array<Item>();
+        itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
     }
 
-    public TextureAtlas getAtlas () {
+    public TextureAtlas getAtlas() {
         return atlas;
+    }
+
+    public void spawnItem(ItemDef itemDef) {
+        itemsToSpawn.add(itemDef);
+    }
+
+    public void handleSpawningItems() {
+        if (!itemsToSpawn.isEmpty()) {
+            ItemDef idef = itemsToSpawn.poll();
+            if (idef.type == Mushroom.class) {
+                items.add(new Mushroom(this, idef.position.x, idef.position.y));
+            }
+        }
     }
 
     @Override
@@ -110,22 +139,30 @@ public class PlayScreen implements Screen {
             player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || Gdx.input.isKeyPressed(Input.Keys.D  ) && player.b2body.getLinearVelocity().x <= 2) {
-            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true );
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2) {
+            player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A  ) && player.b2body.getLinearVelocity().x <= 2) {
-            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true );
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x <= 2) {
+            player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
         }
     }
 
     public void update(float dt) {
         handleInput(dt);
+        handleSpawningItems();
 
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
         goomba.update(dt);
+        goomba2.update(dt);
+
+
+        for (Item item : items) {
+            item.update(dt);
+        }
+
         hud.update(dt);
 
         gameCam.position.x = player.b2body.getPosition().x;
@@ -156,6 +193,12 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         player.draw(game.batch);
         goomba.draw(game.batch);
+        goomba2.draw(game.batch);
+
+        for (Item item : items) {
+            item.draw(game.batch);
+        }
+
         game.batch.end();
 
 

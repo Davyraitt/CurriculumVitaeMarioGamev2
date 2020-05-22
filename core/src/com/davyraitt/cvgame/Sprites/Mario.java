@@ -27,6 +27,10 @@ public class Mario extends Sprite {
     public State previousState;
     private Animation<TextureRegion> marioRun;
     private Animation<TextureRegion> marioJump;
+
+    //growing Mario
+    
+
     private float stateTimer;
     private boolean runningRight;
 
@@ -122,10 +126,11 @@ public class Mario extends Sprite {
         fdef.filter.maskBits =
                 CVGame.GROUND_BIT
                         | CVGame.COIN_BIT
-                        | CVGame.BRICK_BIT |
-                        CVGame.ENEMY_BIT
+                        | CVGame.BRICK_BIT
+                        | CVGame.ENEMY_BIT
                         | CVGame.OBJECT_BIT
-                        | CVGame.ENEMY_HEAD_BIT;
+                        | CVGame.ENEMY_HEAD_BIT
+                        | CVGame.ITEM_BIT;
 
 
         fdef.shape = shape;
