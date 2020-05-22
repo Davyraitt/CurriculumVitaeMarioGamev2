@@ -39,6 +39,7 @@ public class CVGame extends Game {
         manager.load("Audio/Sounds/bump.wav", Sound.class);
         manager.load("Audio/Sounds/breakblock.wav", Sound.class);
         manager.load( "Audio/Sounds/powerup_spawn.wav", Sound.class);
+        manager.load( "Audio/Sounds/powerup.wav", Sound.class);
         manager.finishLoading();
         setScreen(new PlayScreen(this));
     }
